@@ -2,20 +2,71 @@
 
 A collection of useful Rails generator scripts for scaffolding, layout files, authentication, and more.
 
+An extended verison of the collection of useful Rails generator scripts created by
+ryanb http://github.com/ryanb/nifty-generators adding improved controller tests when
+using Shoulda (http://github.com/thoughtbot/shoulda), support for using factory_girl
+(http://github.com/thoughtbot/factory_girl) to provide the test fixtures, and support
+for the generation of formtastic (http://github.com/justinfrench/formtastic/) powered
+forms in the views.
 
 == Install
 
-  gem install nifty-generators
+Available only as a plugin.
+
+To use in a single rails app:
 
 
 == Usage
 
 Once you install the gem, the generators will be available to all Rails applications on your system. If you run script/generate without any additional arguments you should see the available generators listed.
+=======
+  script/plugin install git://github.com/iceburging/nifty-generators.git
+
+To make available to all rails apps:
+
+  ~/.rails/generators install git://github.com/iceburging/nifty-generators.git
+
 
 To run the generator, go to your rails project directory and call it using the script/generate or script/destroy command.
 
   script/generate nifty_scaffold Recipe name:string index new
 
+== Extended Features
+
+=== Shoulda
+
+Simply use the nifty_scaffold generator with the +--shoulda+ option as before.
+The controller tests will now test assignment, response, template rendering and
+the flash status.
+
+  script/generate nifty_scaffold --shoulda Recipe name:string
+
+=== Factory Girl
+
+Use the the nifty_scaffold generator with the +--factory_girl+ option to create
+a factory.rb file in test/ (if using Test::Unit or Shoulda) or spec/ (if using RSpec)
+and use factory_girl to provide the test fixtures.
+
+  script/generate nifty_scaffold --factory_girl Recipe name:string
+
+If the factory.rb file already exists then the new Factory will be appended to the end
+of the file.
+
+=== Formtastic
+
+Use the the nifty_scaffold generator with the +--formtastic+ option to generate
+formtastic code for the forms in the new and edit views.
+
+  script/generate nifty_scaffold --formtastic Recipe name:string
+
+When using the formtastic option you will need to make sure that you have installed the
+formtastic gem, generated the formtastic stylesheets, and added them to your application.rb
+layout file before running the application.
+
+=== Compatability
+
+The +--factory_girl+ and +--formtastic+ options should work alongside the other
+options. Notably they can be used with both the +--haml+ and +--RSpec+ options.
 
 == Included Generators
 
@@ -44,6 +95,7 @@ The Rails 3 support is still in early development, please {report any issues}[ht
 
 == Troubleshooting and FAQs
 
+<<<<<<< HEAD
 <b>What is the difference between nifty_scaffold and built-in scaffold?</b>
 
 One of the primary differences is that nifty_scaffold allows you to choose which controller actions to generate.
@@ -55,6 +107,7 @@ There are a few changes to the generated code as well, such as no XML format by 
 It also offers support for HAML, Shoulda, and RSpec.
 
 
+=======
 <b>I get "undefined method 'title'" error.</b>
 
 Try running nifty_layout, that will generate this helper method. Or you can just change the templates to whatever approach you prefer for setting the title.
@@ -87,10 +140,10 @@ Try restarting your development server. Sometimes it doesn't detect the change i
 Make sure you have mocha installed and require it in your spec/test helper.
 
   gem install mocha
-  
+
   # in spec_helper.rb
   config.mock_with :mocha
-  
+
   # in test_helper.rb
   require 'mocha'
 
@@ -102,3 +155,5 @@ Also, make sure you're using Rails 2.1 or greater.
 If you are having a problem with Nifty Generators, first look at the FAQs above. If you still cannot resolve it, please submit an issue here.
 
 http://github.com/ryanb/nifty-generators/issues
+If you wish the generators behaved differently, please consider
+forking the project and modifying to your heart's content.
